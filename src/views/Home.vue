@@ -19,20 +19,13 @@
 import FeaturedProducts from '@/components/FeaturedProducts'
 import SpecialOffers from '@/components/SpecialOffers'
 import shopify from '@/services/shopify'
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'home',
   created () {
     this.fetchCollections()
-    if (!this.checkout) {
-      this.createCheckout()
-    }
   },
   computed: {
-    ...mapGetters({
-      checkout: 'checkout'
-    })
   },
   methods: {
     async fetchCollections () {
@@ -42,10 +35,6 @@ export default {
       } catch (error) {
         console.log(error)
       }
-    },
-    async createCheckout () {
-      const checkout = await shopify.checkout.create()
-      this.$store.commit('updateCheckout', checkout)
     }
   },
   components: {

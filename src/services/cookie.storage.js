@@ -30,4 +30,16 @@ export default class CookieStorage {
   static getRefreshToken () {
     return Cookie.get('refreshToken')
   }
+
+  static setCheckoutId (value) {
+    Cookie.set('checkoutId', value)
+  }
+
+  static getCheckoutId () {
+    return Cookie.get('checkoutId')
+  }
+
+  static removeCheckoutId () {
+    Cookie.remove('checkoutId')
+  }
 }

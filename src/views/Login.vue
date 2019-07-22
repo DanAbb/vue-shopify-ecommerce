@@ -75,6 +75,7 @@ export default {
       width: 100%;
       height: 50px;
       font-size: 20px;
+      padding: 0 10px;
     }
   }
 

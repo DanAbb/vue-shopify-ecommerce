@@ -4,7 +4,7 @@
     <div class="top-section">
       <h1 class="title">Special Offers</h1>
       <p>Deserunt labore pariatur id occaecat qui esse laborum proident ea. Nostrud ad est laborum non. Aliqua ut ea do pariatur tempor et qui officia. Non cupidatat veniam incididunt officia sit id. Mollit eiusmod ullamco dolore laborum velit enim.</p>
-    </div>    
+    </div>
     <div class="products">
       <product v-for="product in products" :key="product.id" :product="product" :promo="true"></product>
     </div>
@@ -58,7 +58,7 @@ export default {
     box-sizing: border-box;
     padding: 50px;
   }
-  
+
   .products {
     display: flex;
     align-items: stretch;

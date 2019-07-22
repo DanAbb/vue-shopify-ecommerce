@@ -10,15 +10,16 @@
         <router-link to="/food">Food Menu</router-link>
         <router-link to="/products">Shop</router-link>
         <router-link to="/contact">Contact</router-link>
+        <router-link class="login" v-if="!loggedIn" to="/login">Log in</router-link>
+        <a href="#" v-if="loggedIn" @click.prevent="signout">Sign out</a>
+        <span v-if="loggedIn" class="username">{{ fullName }}</span>
+        <router-link v-if="checkout" class="social-icon basket" to="/basket">
+          <span class="checkout-num" v-if="checkoutNum">{{ checkoutNum }}</span>
+          <span class="cart-icon"></span>
+          <!-- <img src="@/assets/shopping-cart.svg" alt="cart"> -->
+        </router-link>
         <router-link class="social-icon" to="https://www.facebook.com"><img src="@/assets/facebook.svg" alt="facebook"></router-link>
         <router-link class="social-icon" to="https://www.twitter.com"><img src="@/assets/twitter.svg" alt="twitter"></router-link>
-        <router-link v-if="checkout" class="social-icon basket" to="/basket">
-          <span v-if="checkoutNum">{{ checkoutNum }}</span>
-          <img src="@/assets/shopping-cart.svg" alt="cart">
-        </router-link>
-        <router-link v-if="!loggedIn" to="/login">Log in</router-link>
-        <span v-if="loggedIn" class="username">{{ fullName }}</span>
-        <a href="#" v-if="loggedIn" @click.prevent="signout">Sign out</a>
       </div>
     </div>
     <div class="sub-nav">
@@ -51,13 +52,19 @@ export default {
     }),
     checkoutNum () {
       if (this.checkout) {
-        return this.checkout.lineItems.length
+        return this.checkout.lineItems.reduce((accum, current) => {
+          return accum + current.quantity
+        }, 0)
       }
+
+      return 0
     },
     fullName () {
       if (this.user) {
         return `${this.user.firstName} ${this.user.lastName}`
       }
+
+      return ''
     }
   },
   methods: {
@@ -65,7 +72,7 @@ export default {
       try {
         const refreshToken = CookieStorage.getRefreshToken()
         await api('post', 'signout', { refreshToken })
-  
+
         CookieStorage.setUserId('')
         CookieStorage.setAuthToken('')
         CookieStorage.setRefreshToken('')
@@ -111,9 +118,6 @@ export default {
         &.router-link-exact-active {
           background: lighten($color: $green-dark, $amount: 10%);
         }
-
-        &:first-child {
-        }
       }
     }
   }
@@ -144,6 +148,10 @@ export default {
       }
     }
 
+    .login {
+      margin: 0 20px 0 0;
+    }
+
     .social-icon {
       display: flex;
       align-items: center;
@@ -160,19 +168,26 @@ export default {
       border: 1px dashed $green-dark;
       border-radius: 20px;
       padding: 5px 15px;
-      margin: 0 10px;
+      margin: 0 20px 0 0;
 
-      span {
-        margin-right: 10px;
+      .checkout-num {
+        margin-right: 5px;
         font-size: 2rem;
       }
 
-      img {
-        height: 25px;
+      .cart-icon {
+        height: 22px;
+        width: 22px;
+        background: url('~@/assets/shopping-cart.svg');
+        margin-bottom: 2px;
       }
 
       &.router-link-exact-active {
         border: 1px dashed $green;
+
+        .cart-icon {
+          background: url('~@/assets/shopping-cart-green.svg');
+        }
       }
     }
   }
@@ -181,5 +196,6 @@ export default {
     text-transform: capitalize;
     font-size: 1.6rem;
     line-height: 1;
+    margin: 0 20px;
   }
 </style>

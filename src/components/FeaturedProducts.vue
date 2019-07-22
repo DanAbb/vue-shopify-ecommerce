@@ -57,7 +57,7 @@ export default {
     box-sizing: border-box;
     padding: 50px;
   }
-  
+
   .products {
     display: flex;
     align-items: stretch;
