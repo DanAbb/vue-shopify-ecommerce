@@ -38,7 +38,7 @@
     "hapi-swagger": "^9.1.1",
     "joi": "^13.1.2",
     "jsonwebtoken": "^8.2.0",
-    "mongoose": "^5.6.5",
+    "mongoose": "^5.7.5",
     "puppeteer": "^1.18.1",
     "shortid": "^2.2.8",
     "vision": "^5.3.1"
